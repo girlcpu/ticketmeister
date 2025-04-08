@@ -8,11 +8,18 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    name: Build (Swift ${{matrix.swift}} on ${{matrix.os}})
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        swift: ["6.1", "6.1"]
 
     steps:
-    - name: Setup just
-      uses: extractions/setup-just@v3
+    - uses: swift-actions/setup-swift@v2.2.0
+      with:
+        swift-version: ${{matrix.swift}}
+    - uses: extractions/setup-just@v3
       with:
         just-version: 1.40.0
     - uses: actions/checkout@v4
