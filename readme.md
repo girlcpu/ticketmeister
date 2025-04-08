@@ -17,8 +17,13 @@ if you want to cross-compile to linux you need the [static linux sdk]
 **note:** [just] loads `.env` files for us ❤️
 
 ```sh
-just build      # <- build binary for current platform
-just run [args] # <- where `[args]` gets passed into the program
+just build        # <- build binary for current platform
+just run [args]   # <- where `[args]` gets passed into the program
+just debug [args] # <- the same as run but for debugging
+
+just update    # <- resolve and update dependencies
+just clean     # <- shortcut to swift package clean
+just deepclean # <- remove all build caches
 ```
 
 <details>
@@ -26,10 +31,9 @@ just run [args] # <- where `[args]` gets passed into the program
 
 ```sh
 just build-macos-arm # <- the three supported platforms
-just build-linux-x86
-just build-linux-arm
-just build-all        # <- build all 3 platforms at once
-just release          # <- build all and package into a nice `release/` directory
+just build-linux-x86 #
+just build-linux-arm #
+just build-all       # <- build all platforms
 ```
 
 </details>
