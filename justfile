@@ -11,10 +11,10 @@ build-macos-arm:
 	swift build -c release --swift-sdk arm64-apple-macosx
 
 build-linux-x86:
-	swift build -c release --swift-sdk x86_64-linux-musl
+	swift build -c release --swift-sdk x86_64-swift-linux-musl
 
 build-linux-arm:
-	swift build -c release --swift-sdk aarch64-linux-musl
+	swift build -c release --swift-sdk aarch64-swift-linux-musl
 
 build-all: build-macos-arm build-linux-x86 build-linux-arm
 	@echo "Built for all platforms"
