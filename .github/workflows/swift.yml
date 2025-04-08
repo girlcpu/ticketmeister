@@ -1,0 +1,23 @@
+name: Swift
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Setup just
+      uses: extractions/setup-just@v3
+      with:
+        just-version: 1.40.0
+    - uses: actions/checkout@v4
+    - name: Build
+      run: swift build -v
+# we don't test "Yet" lmao
+#    - name: Run tests
+#      run: swift test -v
