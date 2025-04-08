@@ -5,6 +5,8 @@ enum DiscordCommand: String, CaseIterable {
     case close
     case closeconfirm
 
+    var name: String { self.rawValue }
+
     var description: String {
         switch self {
         case .close:
@@ -38,6 +40,15 @@ enum DiscordCommand: String, CaseIterable {
             ]
         default:
             []
+        }
+    }
+
+    var defaultPermissions: [Permission]? {
+        switch self {
+        case .close, .closeconfirm:
+            [.manageMessages]
+        case .new:
+            [.sendMessages]
         }
     }
 }

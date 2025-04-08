@@ -7,4 +7,9 @@ struct EventHandler: GatewayEventHandler {
     func onMessageCreate(_ payload: Gateway.MessageCreate) async throws {
         print(payload.content)
     }
+
+    func onReady(_ payload: Gateway.Ready) async throws {
+        print("Gateway connection is ready.")
+        print("User = \(payload.user.tag)")
+    }
 }

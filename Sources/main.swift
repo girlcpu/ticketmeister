@@ -1,12 +1,30 @@
 import DiscordBM
+import Foundation
+
+guard let token = ProcessInfo.processInfo.environment["DISCORD_TOKEN"] else {
+    fatalError("No token was provided!")
+}
 
 let bot = await BotGatewayManager(
-    token: TODO("Token not implemented"),
+    token: token,
     presence: .init(
         activities: [.init(name: "your tickets", type: .watching)], status: .online,
         afk: false),
-    intents: [.messageContent, .guildMembers]
+    intents: [.messageContent]
 )
+
+let commands = DiscordCommand.allCases.map { command in
+    return Payloads.ApplicationCommandCreate(
+        name: command.name,
+        description: command.description,
+        options: command.options,
+        default_member_permissions: command.defaultPermissions,
+    )
+}
+
+print("Registering commands")
+try await bot.client.bulkSetApplicationCommands(payload: commands).guardSuccess()
+print("Successfully registered")
 
 await withTaskGroup { group in
     group.addTask {
@@ -19,3 +37,5 @@ await withTaskGroup { group in
         }
     }
 }
+
+await bot.disconnect()
