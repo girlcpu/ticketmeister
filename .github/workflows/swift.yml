@@ -19,12 +19,9 @@ jobs:
       - uses: swift-actions/setup-swift@c3d14e82ba68208eb830b63e91d6b806467a09b5
         with:
           swift-version: 6.1
-      - uses: extractions/setup-just@v3
-        with:
-          just-version: 1.40.0
       - uses: actions/checkout@v4
       - name: Build
         run: swift build -v
-# we don't test "Yet" lmao
-#    - name: Run tests
-#      run: swift test -v
+      # what's a test?
+      # - name: Run tests
+      #   run: swift test -v
