@@ -27,5 +27,7 @@ build-linux-arm: (_build "release" "aarch64-swift-linux-musl")
 build-all: build-macos-arm build-linux-x86 build-linux-arm
 	@echo "Built for all platforms"
 
+set dotenv-load
+
 run *ARGS: (_run "release" ARGS)
 debug *ARGS: (_run "debug" ARGS)
