@@ -1,19 +1,15 @@
 import DiscordBM
 import Foundation
+import SQLKit
+import SQLiteKit
 
-guard let token = ProcessInfo.processInfo.environment["DISCORD_TOKEN"] else {
-    fatalError("No token was provided!")
+struct Memory {
+    let guilds = GuildMemory()
 }
 
-let bot = await BotGatewayManager(
-    token: token,
-    presence: .init(
-        activities: [.init(name: "your tickets", type: .watching)], status: .online,
-        afk: false),
-    intents: [.messageContent]
-)
+let runtimeMemory = Memory()
 
-let commands = DiscordCommand.allCases.map { command in
+private let commands = DiscordCommand.allCases.map { command in
     return Payloads.ApplicationCommandCreate(
         name: command.name,
         description: command.description,
@@ -21,6 +17,22 @@ let commands = DiscordCommand.allCases.map { command in
         default_member_permissions: command.defaultPermissions,
     )
 }
+
+private let token = ProcessInfo.processInfo.environment["DISCORD_TOKEN"]
+guard let token else {
+    fatalError("No token was provided!")
+}
+
+private let bot = await BotGatewayManager(
+    token: token,
+    presence: .init(
+        activities: [
+            .init(name: "your tickets", type: .watching)
+        ],
+        status: .online, afk: false
+    ),
+    intents: [.messageContent]
+)
 
 print("Registering commands")
 try await bot.client.bulkSetApplicationCommands(payload: commands).guardSuccess()

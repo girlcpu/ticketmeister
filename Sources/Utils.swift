@@ -15,3 +15,9 @@ extension DiscordUser {
         return "\(self.username)\(suffix)"
     }
 }
+
+extension Snowflake {
+    var asInt: Int64 {
+        Int64(self.rawValue)!
+    }
+}
